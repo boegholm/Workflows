@@ -24,25 +24,25 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0 # avoid shallow clone so nbgv can do its work.
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 5.0.x
-    - uses: boegholm/PreparePrivateNugetFeed@master
-      with:
-        nuser: ${{ secrets.nuser }}
-        npass: ${{ secrets.npass }}
-        NUGET_KEY: ${{ secrets.NUGET_KEY }}
-        NUGET_SOURCE: ${{ secrets.NUGET_SOURCE }}
-        NUGET_SYM_SOURCE: ${{ secrets.NUGET_SYM_SOURCE }}
+      - uses: actions/setup-dotnet@v1
+        name: Setup .NET
+        with:
+          dotnet-version: 5.0.x
+      - uses: boegholm/PreparePrivateNugetFeed@master
+        with:
+          nuser: ${{ secrets.nuser }}
+          npass: ${{ secrets.npass }}
+          NUGET_KEY: ${{ secrets.NUGET_KEY }}
+          NUGET_SOURCE: ${{ secrets.NUGET_SOURCE }}
+          NUGET_SYM_SOURCE: ${{ secrets.NUGET_SYM_SOURCE }}
 
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
-    - uses: boegholm/PushProjectToNugetFeed@master
-      with:
-        projects: ${{ inputs.projects }}
-        NUGET_KEY: ${{ secrets.NUGET_KEY }}
-        NUGET_SOURCE: ${{ secrets.NUGET_SOURCE }}
-        NUGET_SYM_SOURCE: ${{ secrets.NUGET_SYM_SOURCE }}
+      - name: Build
+        run: dotnet build --no-restore
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
+      - uses: boegholm/PushProjectToNugetFeed@master
+        with:
+          projects: ${{ inputs.projects }}
+          NUGET_KEY: ${{ secrets.NUGET_KEY }}
+          NUGET_SOURCE: ${{ secrets.NUGET_SOURCE }}
+          NUGET_SYM_SOURCE: ${{ secrets.NUGET_SYM_SOURCE }}
