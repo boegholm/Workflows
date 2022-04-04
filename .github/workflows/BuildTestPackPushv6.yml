@@ -27,7 +27,7 @@ jobs:
       - uses: actions/setup-dotnet@v1
         name: Setup .NET
         with:
-          dotnet-version: 5.0.x
+          dotnet-version: 6.0.x
       - uses: boegholm/PreparePrivateNugetFeed@master
         with:
           nuser: ${{ secrets.nuser }}
