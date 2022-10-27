@@ -6,6 +6,10 @@ on:
       projects:
         required: true
         type: string
+      public:
+        type: boolean
+        required: false
+        default: false        
     secrets:
       nuser:
         required: true
@@ -42,6 +46,7 @@ jobs:
         run: dotnet test --no-build --verbosity normal
       - uses: boegholm/PushProjectToNugetFeed@master
         with:
+          public: ${{ inputs.public }}
           projects: ${{ inputs.projects }}
           NUGET_KEY: ${{ secrets.NUGET_KEY }}
           NUGET_SOURCE: ${{ secrets.NUGET_SOURCE }}
